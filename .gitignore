@@ -1,0 +1,60 @@
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# ─── Virtual Environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+venv_sadtalker/
+env/
+ENV/
+
+# ─── Environment Variables / Secrets ──────────────────────────────────────────
+.env
+.env.*
+!.env.example
+backend/.env
+firebase-key.json
+
+# ─── Model Weights (large binary blobs — never commit these) ──────────────────
+backend/SadTalker/checkpoints/
+backend/SadTalker/gfpgan/weights/
+backend/models/
+backend/gfpgan/
+
+# ─── SadTalker build / runtime artefacts ──────────────────────────────────────
+backend/SadTalker/ffmpeg.exe
+backend/SadTalker/results/
+
+# ─── Generated Media (runtime output) ─────────────────────────────────────────
+backend/uploads/audio/
+backend/uploads/videos/
+backend/uploads/temp_sadtalker/
+
+# ─── Databases (local runtime state) ──────────────────────────────────────────
+*.db
+*.sqlite3
+chroma_db/
+backend/chroma_db/
+
+# ─── Frontend ─────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+
+# ─── IDE / OS ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/

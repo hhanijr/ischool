@@ -1,0 +1,28 @@
+# Avoid copying large models (will be mounted as volume)
+models/
+SadTalker/checkpoints/
+SadTalker/gfpgan/weights/
+SadTalker/venv_sadtalker/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Local databases and data
+*.db
+chroma_db/
+uploads/
+logs/
+
+# Secrets and environment
+.env
+
+# Docker artifacts
+Dockerfile
+docker-compose.yml
+.dockerignore

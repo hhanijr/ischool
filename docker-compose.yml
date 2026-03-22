@@ -1,0 +1,63 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ischool_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      - MODELS_PATH=/app/models
+      - TRANSFORMERS_CACHE=/app/models/huggingface
+    volumes:
+      # Bind mount for source code - FIRST
+      - ./backend:/app
+      # Models must be mounted AFTER source to override properly
+      - ./backend/models:/app/models:ro
+      # Persistent outputs
+      - ./backend/uploads:/app/uploads
+      # Database
+      - ./backend/lessons.db:/app/lessons.db
+      - ./backend/chroma_db:/app/chroma_db
+    shm_size: '8gb'
+    # ======= NVIDIA GPU Acceleration =======
+    deploy:
+      resources:
+        limits:
+          memory: 16g
+        reservations:
+          memory: 12g
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - ischool_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ischool_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    volumes:
+      # Bind mount for frontend source code hot-reloading
+      - ./frontend:/app
+      # Exclude node_modules from bind mount to use container's installed ones
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - ischool_network
+
+networks:
+  ischool_network:
+    driver: bridge
